@@ -1,0 +1,29 @@
+.your-account-div {
+  background-color: #a8bfd3; /* Light blue background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.account-details {
+  font-size: 1.2rem;
+}
+
+.account-details p {
+  margin: 5px 0;
+}
+
+.other-account {
+  margin-bottom: 10px;
+}
+
+.table-striped {
+  margin-bottom: 20px;
+}
+/* Target button inside table directly */
+.table-striped .btn {
+  background-color: #e4eb62; /* Customize button color */
+  color: black;
+  border: none;
+}

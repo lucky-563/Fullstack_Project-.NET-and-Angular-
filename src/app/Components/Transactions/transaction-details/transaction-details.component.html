@@ -1,0 +1,110 @@
+<!-- Loading Spinner -->
+<div *ngIf="isLoading" class="text-center mt-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div *ngIf="!isLoading">
+  <div *ngFor="let project of projectDetails" class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2>Project Name: {{ project.projectDetails.projectName }}</h2>
+    </div>
+    <div class="card-body">
+      <!-- Display the account details of the logged-in user -->
+      <div *ngFor="let account of project.relatedAccounts">
+        <div *ngIf="userName === account.managerName" class="your-account-div">
+          <h2>Your Account (Manager: {{ account.managerName }})</h2>
+          <div
+            class="account-details d-flex justify-content-between align-items-center"
+          >
+            <p><strong>Account Name:</strong> {{ account.accountName }}</p>
+            <p><strong>Role:</strong> {{ account.managerRole }}</p>
+            <p><strong>Amount:</strong> {{ account.amount | currency }}</p>
+            <div>
+              <button
+                class="btn btn-secondary"
+                (click)="
+                  opensatement(
+                    account.managerName,
+                    account.accountName,
+                    project.projectDetails.projectName
+                  )
+                "
+              >
+                Show Statement
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for displaying the transaction statement -->
+<div
+  id="transactionModal"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="transactionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="transactionModalLabel">
+          Transaction Statement for {{ selectedAccount?.accountName }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          (click)="closeModal()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedAccountTransactions.length > 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>From Account</th>
+                <th>To Account</th>
+                <th>Amount</th>
+                <th>Transaction Type</th>
+                <th>Date</th>
+                <th>Request Approved By</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let transaction of selectedAccountTransactions">
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.fromAccount }}</td>
+                <td>{{ transaction.toAccount }}</td>
+                <td>{{ transaction.transactionType }}</td>
+                <td>{{ transaction.amount | currency }}</td>
+                <td>{{ transaction.transactionDate | date }}</td>
+                <td>{{ transaction.performedBy }}</td>
+                <td>{{ transaction.remarks }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="selectedAccountTransactions.length === 0">
+          <p>No transactions available.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+.nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #a6d5e3; /* Primary color */
+  color: black;
+  padding: 10px 20px;
+}
+
+.menu-button {
+  font-size: 18px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  color: #ffcc00; /* Highlight on hover */
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.nav-links a.active {
+  border-bottom: 2px solid #ffcc00; /* Highlight active link */
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  color: #ffcc00; /* Highlight on hover */
+}

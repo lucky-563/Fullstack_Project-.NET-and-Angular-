@@ -1,0 +1,16 @@
+.card {
+  box-shadow: 0 2px 5px #e8edee1a;
+}
+
+.card-header {
+  font-size: 1.25rem;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 0.9rem;
+}
