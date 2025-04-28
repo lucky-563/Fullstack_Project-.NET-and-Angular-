@@ -1,0 +1,112 @@
+<div class="container mt-4">
+  <h2 class="text-center">Projects and Payment Requests</h2>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Projects and Payment Requests Table -->
+  <div *ngIf="!isLoading && !errorMessage">
+    <ng-container *ngFor="let item of data">
+      <!-- Only display project if there are payment requests -->
+      <div
+        *ngIf="item.paymentRequests && item.paymentRequests.length > 0"
+        class="card mb-4"
+      >
+        <!-- Project Details -->
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0">Project: {{ item.project.projectName }}</h2>
+        </div>
+
+        <!-- Payment Requests Table -->
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>From Account</th>
+                <th>To Account</th>
+                <th>Amount</th>
+                <th>Requested By</th>
+                <th>Requested On</th>
+                <th>Requested To</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let request of item.paymentRequests">
+                <td>{{ request.paymentRequestId }}</td>
+                <td>{{ request.fromAccountName }}</td>
+                <td>{{ request.toAccountName }}</td>
+                <td>₹{{ request.amount | number }}</td>
+                <td>{{ request.requestedByEmail }}</td>
+                <td>{{ request.requestedOn | date : "d MMM h:mm a" }}</td>
+                <td>{{ request.requestToManger }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="{
+                      'bg-success': request.status === 'Approved',
+                      'bg-danger': request.status === 'Rejected',
+                      'bg-warning': request.status === 'Pending',
+                      'bg-secondary': request.status === 'Expired'
+                    }"
+                  >
+                    {{ request.status }}
+                  </span>
+                </td>
+                <!-- Action Buttons only if status is 'Pending' -->
+                <!-- <td *ngIf="isApprover(request) && request.status === 'Pending'">
+                  <button
+                    class="btn btn-success"
+                    (click)="approveRequest(request.paymentRequestId)"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    class="btn btn-danger"
+                    (click)="rejectRequest(request.paymentRequestId)"
+                  >
+                    Reject
+                  </button>
+                </td> -->
+
+                <td>
+                  <ng-container
+                    *ngIf="
+                      isApprover(request) && request.status === 'Pending';
+                      else noAction
+                    "
+                  >
+                    <button
+                      class="btn btn-success"
+                      (click)="approveRequest(request.paymentRequestId)"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      class="btn btn-danger"
+                      (click)="rejectRequest(request.paymentRequestId)"
+                    >
+                      Reject
+                    </button>
+                  </ng-container>
+                  <ng-template #noAction> No Action Available </ng-template>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

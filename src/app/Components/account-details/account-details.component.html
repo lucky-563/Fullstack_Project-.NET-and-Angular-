@@ -1,0 +1,599 @@
+<!-- Loading Spinner -->
+<div *ngIf="isLoading" class="text-center mt-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div *ngIf="!isLoading">
+  <div *ngFor="let project of projectDetails" class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2>Project Name: {{ project.projectDetails.projectName }}</h2>
+      <div
+        *ngIf="userName === project.projectDetails.createdBy"
+        class="float-end"
+      >
+        <!-- Button to trigger Add Account modal -->
+        <button
+          class="btn btn-success"
+          (click)="openAddAccountModal(project.projectDetails.projectName)"
+        >
+          Add Account
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- Display the account details of the logged-in user -->
+      <div *ngFor="let account of project.relatedAccounts">
+        <div *ngIf="userName === account.managerName" class="your-account-div">
+          <h2>Your Account (Manager: {{ account.managerName }})</h2>
+          <div
+            class="account-details d-flex justify-content-between align-items-center"
+          >
+            <p><strong>Account Name:</strong> {{ account.accountName }}</p>
+
+            <p><strong>Role:</strong> {{ account.managerRole }}</p>
+
+            <p><strong>Amount:</strong> {{ account.amount | currency }}</p>
+            <div>
+              <button
+                *ngIf="
+                  userName === project.projectDetails.createdBy &&
+                  account.accountName !== 'Master'
+                "
+                class="btn btn-sm btn-secondary me-2"
+                (click)="openUpdateManagerModal(account.accountId)"
+              >
+                <i class=""></i> Change Manager
+              </button>
+            </div>
+            <div>
+              <button
+                class="btn btn-warning"
+                (click)="
+                  openWithDrawModal(
+                    project.projectDetails.projectName,
+                    account.accountName
+                  )
+                "
+              >
+                WithDraw
+              </button>
+            </div>
+            <div>
+              <button
+                class="btn btn-primary"
+                (click)="openTransferModel(project.projectDetails.projectName)"
+                style="color: black; background-color: rgb(151, 223, 248)"
+              >
+                Transfer
+              </button>
+            </div>
+            <div>
+              <button
+                class="btn btn-secondary"
+                (click)="
+                  openRequestModel(
+                    project.projectDetails.projectName,
+                    account.accountName
+                  )
+                "
+                style="color: white; background-color: rgb(110, 101, 101)"
+              >
+                Request
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display other accounts in a table -->
+        <div *ngIf="userName !== account.managerName" class="other-account">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Account Name</th>
+                <th>Manager Name</th>
+                <th>Role</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ account.accountName }}</td>
+                <td>{{ account.managerName }}</td>
+                <td>{{ account.managerRole }}</td>
+                <td>{{ account.amount | currency }}</td>
+                <td>
+                  <button
+                    *ngIf="
+                      userName === project.projectDetails.createdBy &&
+                      account.accountName !== 'Master'
+                    "
+                    class="btn btn-sm btn-secondary me-2"
+                    class="btn btn-sm btn-secondary me-2"
+                    (click)="openUpdateManagerModal(account.accountId)"
+                  >
+                    <i class=""></i> Change Manager
+                  </button>
+                </td>
+                <td>
+                  <button
+                    *ngIf="userName === project.projectDetails.createdBy"
+                    class="btn btn-danger"
+                    (click)="onDeleteAccount(account.accountId)"
+                    style="
+                      color: white;
+                      background-color: red;
+                      border-color: red;
+                    "
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Click to delete this project"
+                    (mouseenter)="showHoverDialog = true"
+                    (mouseleave)="showHoverDialog = false"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Account Modal -->
+<div
+  class="modal fade"
+  id="addAccountModal"
+  tabindex="-1"
+  aria-labelledby="addAccountModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addAccountModalLabel">Add Account</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="addAccountForm" (ngSubmit)="onAddAccountSubmit()">
+        <div class="modal-body">
+          <!-- Display Project Name -->
+
+          <!-- Account Name -->
+          <div class="mb-3">
+            <label for="accountName" class="form-label">Account Name</label>
+            <input
+              type="text"
+              id="accountName"
+              class="form-control"
+              formControlName="accountName"
+            />
+            <div
+              *ngIf="
+                addAccountForm.get('accountName')?.touched &&
+                addAccountForm.get('accountName')?.invalid
+              "
+              class="text-danger"
+            >
+              Account Name is required.
+            </div>
+          </div>
+
+          <!-- Manager Name -->
+          <div class="mb-3">
+            <label for="managerName" class="form-label">Manager Name</label>
+            <select
+              id="managerName"
+              class="form-control"
+              formControlName="managerName"
+            >
+              <option value="" disabled selected>Select a manager</option>
+              <option *ngFor="let user of userList" [value]="user">
+                {{ user }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                addAccountForm.get('managerName')?.touched &&
+                addAccountForm.get('managerName')?.invalid
+              "
+              class="text-danger"
+            >
+              Manager Name is required.
+            </div>
+          </div>
+
+          <!-- Amount -->
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="addAccountForm.invalid"
+          >
+            Add Account
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- WithDraw Modal -->
+<div
+  class="modal fade"
+  id="WithDraw"
+  tabindex="-1"
+  aria-labelledby="withDrawModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="withDrawModalLabel">WithDraw Amount</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="WithDrawForm" (ngSubmit)="onWithDrawSubmit()">
+        <div class="modal-body">
+          <!-- Amount -->
+          <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input
+              type="number"
+              id="amount"
+              class="form-control"
+              formControlName="amount"
+            />
+            <div
+              *ngIf="
+                WithDrawForm.get('amount')?.invalid &&
+                WithDrawForm.get('amount')?.touched
+              "
+            >
+              <small *ngIf="WithDrawForm.get('amount')?.hasError('required')">
+                Amount is required.
+              </small>
+              <small *ngIf="WithDrawForm.get('amount')?.hasError('min')">
+                Amount must be greater than 0.
+              </small>
+            </div>
+          </div>
+
+          <!-- Remarks -->
+          <div class="mb-3">
+            <label for="remarks" class="form-label">Remarks</label>
+            <input
+              type="text"
+              id="remarks"
+              class="form-control"
+              formControlName="remarks"
+            />
+            <div
+              *ngIf="
+                WithDrawForm.get('remarks')?.touched &&
+                WithDrawForm.get('remarks')?.invalid
+              "
+              class="text-danger"
+            >
+              Please enter remarks.
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="WithDrawForm.invalid"
+          >
+            WithDraw
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="errorModal"
+  tabindex="-1"
+  aria-labelledby="errorModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Error details go here.</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Transfer Modal -->
+<div
+  class="modal fade"
+  id="TransferiD"
+  tabindex="-1"
+  aria-labelledby="transferModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="transferModalLabel">Transfer Amount</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="transferForm" (ngSubmit)="onTransferSubmit()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="fromAccountName" class="form-label">From Account</label>
+            <input
+              type="text"
+              id="fromAccountName"
+              class="form-control"
+              formControlName="fromAccountName"
+            />
+            <div
+              *ngIf="
+                transferForm.get('fromAccountName')?.touched &&
+                transferForm.get('fromAccountName')?.invalid
+              "
+              class="text-danger"
+            >
+              Account Name is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="toAccountName" class="form-label">To Account</label>
+            <input
+              type="text"
+              id="toAccountName"
+              class="form-control"
+              formControlName="toAccountName"
+            />
+            <div
+              *ngIf="
+                transferForm.get('toAccountName')?.touched &&
+                transferForm.get('toAccountName')?.invalid
+              "
+              class="text-danger"
+            >
+              Account Name is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input
+              type="number"
+              id="amount"
+              class="form-control"
+              formControlName="amount"
+            />
+            <div
+              *ngIf="
+                transferForm.get('amount')?.invalid &&
+                transferForm.get('amount')?.touched
+              "
+            >
+              <small *ngIf="transferForm.get('amount')?.hasError('required')">
+                Amount is required.
+              </small>
+              <small *ngIf="transferForm.get('amount')?.hasError('min')">
+                Amount must be greater than 0.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="transferForm.invalid"
+          >
+            Transfer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Request Modal -->
+<div
+  class="modal fade"
+  id="Requestmodel"
+  tabindex="-1"
+  aria-labelledby="requestModellLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="requestModellLabel">Request Money</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="requestForm" (ngSubmit)="onRequestSubmit()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="fromAccountName" class="form-label">From Account</label>
+            <input
+              type="text"
+              id="fromAccountName"
+              class="form-control"
+              formControlName="fromAccountName"
+            />
+            <div
+              *ngIf="
+                requestForm.get('fromAccountName')?.touched &&
+                requestForm.get('fromAccountName')?.invalid
+              "
+              class="text-danger"
+            >
+              Account Name is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input
+              type="number"
+              id="amount"
+              class="form-control"
+              formControlName="amount"
+            />
+            <div
+              *ngIf="
+                requestForm.get('amount')?.invalid &&
+                requestForm.get('amount')?.touched
+              "
+            >
+              <small *ngIf="requestForm.get('amount')?.hasError('required')">
+                Amount is required.
+              </small>
+              <small *ngIf="requestForm.get('amount')?.hasError('min')">
+                Amount must be greater than 0.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="requestForm.invalid"
+          >
+            Send Request
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="updateManagerModal"
+  tabindex="-1"
+  aria-labelledby="updateManagerModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateManagerModalLabel">Update Manager</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form (ngSubmit)="onSubmitUpdateManager()">
+        <div class="modal-body">
+          <!-- Account ID -->
+          <div class="mb-3">
+            <label for="accountId" class="form-label">Account ID</label>
+            <input
+              type="number"
+              id="accountId"
+              class="form-control"
+              [(ngModel)]="accountId"
+              name="accountId"
+              readonly
+            />
+          </div>
+
+          <!-- New Manager Name -->
+          <div class="mb-3">
+            <label for="newManagerName" class="form-label"
+              >New Manager Name</label
+            >
+            <input
+              type="text"
+              id="newManagerName"
+              class="form-control"
+              [(ngModel)]="newManagerName"
+              name="newManagerName"
+              required
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+/* Ensure modal has some padding */
+.modal-dialog {
+  max-width: 80%; /* Allow modal to take up 80% of the width */
+  width: auto; /* Allow the width to adjust automatically based on the content */
+  margin: 1.75rem auto; /* Center the modal vertically and horizontally */
+}
+
+.modal-content {
+  min-width: 300px; /* Ensure a minimum width */
+  max-width: 100%; /* Prevent it from becoming too wide */
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-body {
+  overflow-y: auto; /* Make body scrollable if content is large */
+  max-height: 400px; /* Set a maximum height */
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+}
+
+table {
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+table th,
+table td {
+  padding: 8px;
+}

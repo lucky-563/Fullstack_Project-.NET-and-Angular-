@@ -1,0 +1,58 @@
+.app-overview {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.features {
+  margin-bottom: 40px;
+}
+
+.feature-list {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.feature {
+  background-color: #f3f3f3;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 22%;
+}
+
+.feature h3 {
+  color: #3f51b5;
+  margin-bottom: 10px;
+}
+
+.how-it-works {
+  margin-bottom: 40px;
+}
+
+ol {
+  margin-left: 20px;
+}
+
+.call-to-action {
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #3f51b5;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background-color: #303f9f;
+}

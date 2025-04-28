@@ -1,0 +1,82 @@
+<div class="register-container">
+  <h2>Register</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <div class="form-group">
+      <div class="mb-3">
+        <label for="username">Username:</label>
+        <input type="text" id="username" formControlName="username" required />
+        <div
+          *ngIf="f['username'].touched && f['username'].invalid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="f['username'].errors?.['required']">
+            Username is required
+          </div>
+          <div *ngIf="f['username'].errors?.['minlength']">
+            Username must be at least 3 characters
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="mb-3">
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" required />
+        <div
+          *ngIf="f['email'].touched && f['email'].invalid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="f['email'].errors?.['required']">Email is required</div>
+          <div *ngIf="f['email'].errors?.['email']">Invalid email format</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="mb-3 mb-3 position-relative">
+        <label for="password" class="form-label">Password:</label>
+        <input
+          [type]="passwordFieldType"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          required
+        />
+
+        <i
+          class="fas fa-eye-slash position-absolute"
+          [class.fa-eye]="passwordFieldType === 'text'"
+          [class.fa-eye-slash]="passwordFieldType === 'password'"
+          (click)="togglePasswordVisibility()"
+          style="
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+          "
+        ></i>
+
+        <div
+          *ngIf="f['password'].touched && f['password'].invalid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="f['password'].errors?.['required']">
+            Password is required
+          </div>
+          <div *ngIf="f['password'].errors?.['minlength']">
+            Password must be at least 6 characters
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div>Already have an account? <a routerLink="/login">Login here</a></div>
+  </form>
+</div>
