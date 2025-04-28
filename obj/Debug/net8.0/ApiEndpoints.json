@@ -1,0 +1,333 @@
+[
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.AccountController",
+    "Method": "CreateAccount",
+    "RelativePath": "api/Account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountDto",
+        "Type": "WalletApi.Models.DTOS.CreateAccountDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.AccountController",
+    "Method": "GetAllAccounts",
+    "RelativePath": "api/Account",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.AccountController",
+    "Method": "UpdateAccount",
+    "RelativePath": "api/Account/{accountId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "accountDto",
+        "Type": "WalletApi.Models.DBModels.Account",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.AccountController",
+    "Method": "DeleteAccount",
+    "RelativePath": "api/Account/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.AccountController",
+    "Method": "ChangeManagerDetails",
+    "RelativePath": "api/Account/ChangeManagerDetails",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "newManagerName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Auth.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "WalletApi.Models.DTOS.LoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Auth.AuthController",
+    "Method": "Register",
+    "RelativePath": "api/Auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "WalletApi.Models.DTOS.RegisterModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Auth.AuthController",
+    "Method": "GetUsernames",
+    "RelativePath": "api/Auth/usersList",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.PaymentRequestController",
+    "Method": "ApprovePaymentRequest",
+    "RelativePath": "api/PaymentRequest/ApprovePaymentRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "paymentRequestId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.PaymentRequestController",
+    "Method": "CreatePaymentRequest",
+    "RelativePath": "api/PaymentRequest/CreatePaymentRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "requestDto",
+        "Type": "WalletApi.Models.DTOS.CreatePaymentRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.PaymentRequestController",
+    "Method": "GetAllRequestsWithProjectDetails",
+    "RelativePath": "api/PaymentRequest/GetAllRequestsWithProjectDetails",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.PaymentRequestController",
+    "Method": "RejectPaymentRequest",
+    "RelativePath": "api/PaymentRequest/RejectPaymentRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "paymentRequestId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Projects.ProjectController",
+    "Method": "DeleteProject",
+    "RelativePath": "api/Project/{projectId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "projectId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Projects.ProjectController",
+    "Method": "GetManagerDetails",
+    "RelativePath": "api/Project/GetAccountstatement",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "managerName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "accountName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "projectName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Projects.ProjectController",
+    "Method": "CreateProject",
+    "RelativePath": "api/Project/NewProject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "projectDto",
+        "Type": "WalletApi.Models.DTOS.CreateProjectDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Projects.ProjectController",
+    "Method": "GetProjectDetails",
+    "RelativePath": "api/Project/ProjectDetails",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Projects.ProjectController",
+    "Method": "UpdateProjectName",
+    "RelativePath": "api/Project/UpdateProjectName",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "projectId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "newProjectName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.TransactionController",
+    "Method": "Deposit",
+    "RelativePath": "api/Transaction/deposit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "depositDto",
+        "Type": "WalletApi.Models.DTOS.DepositDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.TransactionController",
+    "Method": "GetTransactionStatements",
+    "RelativePath": "api/Transaction/transaction-statements",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.TransactionController",
+    "Method": "Transfer",
+    "RelativePath": "api/Transaction/transfer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transferDto",
+        "Type": "WalletApi.Models.DTOS.TransferDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WalletApi.Controllers.Accounts.TransactionController",
+    "Method": "Withdraw",
+    "RelativePath": "api/Transaction/withdraw",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "withdrawDto",
+        "Type": "WalletApi.Models.DTOS.WithdrawDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
