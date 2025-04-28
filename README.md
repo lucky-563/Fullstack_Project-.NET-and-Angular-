@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WalletUI
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
@@ -25,3 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+=======
+# Fullstack_Project-.NET-and-Angular-
+Fullstack application built with Angular for the frontend, ASP.NET Core Web API for the backend, and SQL Server as the database. Developed as part of a capstone projects, this application includes features such as user authentication, authorization, role-based access, and complete CRUD functionality.
+>>>>>>> 719b2ad76cdfe63cb53939abd44af1ffb1636d5e
